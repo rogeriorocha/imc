@@ -1,6 +1,7 @@
-# imc
+# IMC
 
-A new Flutter application.
+POC utilizada para teste da tecnologia flutter
+
 
 ## Getting Started
 

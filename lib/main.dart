@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,6 +29,15 @@ class _IMCState extends State<IMC> {
 
   String _infoText = "Informe os dados!";
   Color _color = Colors.green;
+
+  void _showAbout() async {
+    const url = 'https://github.com/rogeriorocha/imc';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Não foi possível executar $url';
+    }
+  }
 
   void _resetFields() {
     weightController.text = "";
@@ -83,25 +92,29 @@ class _IMCState extends State<IMC> {
           IconButton(
             icon: Icon(Icons.refresh),
             onPressed: _resetFields,
-          )
+          ),
+          IconButton(
+            icon: Icon(Icons.alternate_email),
+            onPressed: _showAbout,
+          ),
         ],
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
-        padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        padding: EdgeInsets.fromLTRB(14.0, 0.0, 14.0, 0.0),
         child: Form(
           key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Icon(Icons.person_outline, size: 120.0, color: _color),
+              Icon(Icons.person_pin, size: 140.0, color: _color),
               TextFormField(
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                     labelText: "Peso (kg)",
                     labelStyle: TextStyle(color: _color)),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: _color, fontSize: 25.0),
+                style: TextStyle(color: _color, fontSize: 27.0),
                 controller: weightController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -115,7 +128,7 @@ class _IMCState extends State<IMC> {
                     labelText: "Altura (cm)",
                     labelStyle: TextStyle(color: _color)),
                 textAlign: TextAlign.center,
-                style: TextStyle(color: _color, fontSize: 25.0),
+                style: TextStyle(color: _color, fontSize: 27.0),
                 controller: heightController,
                 validator: (value) {
                   if (value.isEmpty) {
@@ -126,7 +139,7 @@ class _IMCState extends State<IMC> {
               Padding(
                 padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
                 child: Container(
-                  height: 50.0,
+                  height: 45.0,
                   child: RaisedButton(
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
@@ -144,7 +157,7 @@ class _IMCState extends State<IMC> {
               Text(
                 _infoText,
                 textAlign: TextAlign.center,
-                style: TextStyle(color: _color, fontSize: 25.0),
+                style: TextStyle(color: _color, fontSize: 26.0),
               )
             ],
           ),
